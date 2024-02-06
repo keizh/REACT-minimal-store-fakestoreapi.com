@@ -1,3 +1,4 @@
+// no state change takers place over here for it to re-render
 import { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ProductsContext } from "../utils/Context";
@@ -6,15 +7,9 @@ function Nav() {
   const { Products } = useContext(ProductsContext);
 
   const { search } = useLocation();
-  // console.log(search, "----", pathname);
-
-  // console.log(Products);
 
   let uniquecategories = Products.map((product) => product.category);
-
   uniquecategories = [...new Set(uniquecategories)];
-
-  // console.log(uniquecategories);
 
   const randomRGB = () =>
     `rgb(${(Math.random() * 255).toFixed()},${(

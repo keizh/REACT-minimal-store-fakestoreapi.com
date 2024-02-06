@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "../utils/axios";
 import { useState, useEffect, useContext } from "react";
 import Loader from "./Loader";
@@ -7,8 +7,10 @@ import { ProductsContext } from "../utils/Context";
 function Details() {
   const { id } = useParams();
   const [Product, setProduct] = useState(null);
-  const { Products } = useContext(ProductsContext);
-  console.log("INSDE OUT", Products);
+  const { Products, setProducts } = useContext(ProductsContext);
+  const navigate = useNavigate();
+
+  // console.log("INSDE OUT", Products);
   // console.log(id);
   // console.log(Products.filter((p) => p.id == id)); TYPE_COERSION WAS THE REASON YOU WERE ARE NOT ABLE TO FIND ID
 
@@ -29,6 +31,14 @@ function Details() {
   });
 
   // return <div>hello</div>;
+
+  function handleDelete() {
+    const remainingAfterDelete = Products.filter((p) => p.id != id);
+    // console.log(remainingAfterDelete);
+    setProducts([...remainingAfterDelete]);
+    localStorage.setItem("products", JSON.stringify([...remainingAfterDelete]));
+    navigate("/");
+  }
 
   return Product ? (
     <>
@@ -53,12 +63,12 @@ function Details() {
           >
             Edit
           </a>
-          <a
-            href=""
+          <button
+            onClick={handleDelete}
             className="inline-block px-[15px] py-[2.5px] rounded  border border-blue-500 text-blue-500"
           >
             Delete
-          </a>
+          </button>
         </div>
       </div>
 

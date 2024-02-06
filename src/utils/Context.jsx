@@ -8,18 +8,18 @@ function Context(props) {
   const [Products, setProducts] = useState(null);
 
   // WE ARE NOW USING LOCAL STORAGE BUT AT ININITAL MOUNT WE STILL WANT THE DATA SO WE ARE NOT DISABLEING THE DATA;
-  async function fetchProducts() {
-    try {
-      const { data } = await axios("/products");
-      setProducts(data);
-      // console.log(data);
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  // async function fetchProducts() {
+  //   try {
+  //     const { data } = await axios("/products");
+  //     setProducts(data);
+  //     // console.log(data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
   useEffect(function () {
-    fetchProducts();
+    // fetchProducts();
     setProducts(JSON.parse(localStorage.getItem("products")));
   }, []);
 
