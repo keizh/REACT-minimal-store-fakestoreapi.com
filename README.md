@@ -28,11 +28,11 @@ when ever we are retriving data ; present loading if data not yet there.
 
 ------------------------------------------------------------------------------------------------>
 
-Assignment 3: Category wise filtering 1:09:30
+Assignment 3: Category wise filtering 1:09:30 =============> COMPLETED ASSIGNMENT 3
 
-unique categories on nav
+unique categories on nav ---> DONE
 
-unique random coloring to each category.
+unique random coloring to each category. ---> DONE
 
 filtering on home page based on categories api fetching fakestoreapi
 
@@ -83,3 +83,39 @@ pathname: This property represents the path part of the URL. It contains the pat
 /user/profile.
 
 search: This property represents the query parameters part of the URL. It contains the query string part of the URL, including the ? character and any query parameters. For example, if your URL is /user/profile?tab=posts, the search would be ?tab=posts.
+
+------------------------------------------------------------------------------------------------>
+
+Assignment 4:
+
+controlled elements
+Add new product component --> FORM 1:57:09
+Add new the product in the product
+
+npm i nanoid ; nanoid()
+
+alert if some field is left empty
+
+stroing in local storage
+
+retrivign data info from filtering , not relying on api request
+
+redirect on add product
+
+localStroage.setItem()
+In local storage we save everything in form of string
+
+---------------> ABOVE JOB DONE
+
+Json.parse(localStorage.getItem('product'))
+
+ADD Edit and Delete btn
+
+take care of State and local Storage together
+
+make "edit" component mimim the "create product" component
+
+do the changes and reflect in local storage and products
+
+EVERY_COMPONENT_THAT_USES_A_USESTATE_THAT_JUST_GOT_UPDATED_WILL_ALSO_UPDATE_ITSELF_IRRESPECTIVE_OF_WHEATHER_IT_WAS_CREATED_INSIDE_OF_IT_OR_NOT
+wHENEVER VALUE OF STATE MODIFIES OR PROP MODIFIES THE COMPONENT RE-RENDER , USECONTEXT IS ALSO KIND OF PROP ONLY RIGHT TO PREVENT PROP DRILLING.
