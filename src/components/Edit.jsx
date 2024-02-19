@@ -1,18 +1,15 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { ProductsContext } from "../utils/Context";
-import { nanoid } from "nanoid";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import Loader from "./Loader";
 
-function AddProduct() {
+function Edit() {
+  const { id } = useParams();
   const { Products, setProducts } = useContext(ProductsContext);
+
   const navigate = useNavigate();
-  //   const [image, setImage] = useState("");
-  //   const [title, setTitle] = useState("");
-  //   const [category, setCategory] = useState("");
-  //   const [price, setPrice] = useState("");
-  //   const [description, setDescription] = useState("");
-  const [product, setProduct] = useState({
-    id: nanoid(),
+  var [product, setProduct] = useState({
+    id: null,
     image: "",
     title: "",
     category: "",
@@ -36,6 +33,9 @@ function AddProduct() {
     ) {
       alert("Please Fill all the Sections");
     } else {
+      Products.filter((p) => p.id == id);
+      console.log(Products);
+      console.log(product);
       setProducts([...Products, product]);
       //   localStorage.setItem("products", JSON.stringify(Products))); --> why not this because you cannot acces state just after updating it.
       localStorage.setItem("products", JSON.stringify([...Products, product]));
@@ -43,13 +43,17 @@ function AddProduct() {
     }
   }
 
-  return (
+  useEffect(() => {
+    setProduct(Products.find((p) => p.id == id));
+  }, []);
+
+  return product.id != null ? (
     <form
-      className="h-full w-full flex flex-col gap-[1rem] items-center pt-[5rem]"
+      className="h-full w-full flex flex-col gap-[1rem] items-center pt-[5rem] "
       onSubmit={handleOnSubmit}
     >
       <h1 className="text-2xl w-[90%] font-medium md:w-[500px] lg:w-[700px]">
-        Add New Product
+        Edit Existing Product
       </h1>
       <input
         type="url"
@@ -57,6 +61,7 @@ function AddProduct() {
         placeholder="image Link"
         name="image"
         onChange={handleChange}
+        value={product.image}
       />
       <input
         type="text"
@@ -64,21 +69,24 @@ function AddProduct() {
         placeholder="title"
         name="title"
         onChange={handleChange}
+        value={product.title}
       />
       <div className="w-[90%] flex justify-between md:w-[500px] lg:w-[700px]">
         <input
           type="text"
-          className="bg-zinc-100  rounded px-[1rem] py-[0.4rem] w-[50%]"
+          className="bg-zinc-100  rounded px-[1rem] py-[0.4rem] w-[50%] "
           placeholder="Category"
           name="category"
           onChange={handleChange}
+          value={product.category}
         />
         <input
           type="number"
-          className="bg-zinc-100  rounded px-[1rem] py-[0.4rem] w-[40%]"
+          className="bg-zinc-100  rounded px-[1rem] py-[0.4rem] w-[40%]  "
           placeholder="Price"
           name="price"
           onChange={handleChange}
+          value={product.price}
         />
       </div>
       <textarea
@@ -88,17 +96,20 @@ function AddProduct() {
         cols="30"
         rows="8"
         placeholder="enter product description here..."
+        value={product.description}
       ></textarea>
-      <div className="w-[90%] md:w-[500px] lg:w-[700px]">
+      <div className="w-[90%]  md:w-[500px]  lg:w-[700px]">
         <button
           className="border border-green-400 rounded px-[1rem] py-[0.4rem] border-2"
           type="submit"
         >
-          Add new Product
+          Update Product
         </button>
       </div>
     </form>
+  ) : (
+    <Loader />
   );
 }
 
-export default AddProduct;
+export default Edit;

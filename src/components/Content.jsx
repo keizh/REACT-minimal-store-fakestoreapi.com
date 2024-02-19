@@ -1,11 +1,12 @@
+/* eslint-disable react/prop-types */
 import { Link, useLocation } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { ProductsContext } from "../utils/Context";
 
-function Content() {
+function Content({ isopen, setisopen }) {
   const { Products } = useContext(ProductsContext);
   const { search } = useLocation();
-
+  console.log("state", isopen);
   // Parse category from the search query string
   const category = search !== "" && decodeURIComponent(search.split("=")[1]);
 
@@ -21,22 +22,45 @@ function Content() {
   useEffect(() => {}, [category, search]);
 
   return (
-    <div className="card-container h-full w-[85%] bg-zinc-100 p-5 flex flex-wrap gap-4 overflow-x-hidden overflow-y-auto">
-      {filteredProducts.map((product) => (
-        <Link
-          key={product.id}
-          to={`/details/${product.id}`}
-          className="card h-[35vh] rounded w-[18%] border border-zinc-400 p-[5px] flex flex-col"
-        >
-          <div
-            style={{ backgroundImage: `url(${product.image})` }}
-            className="card-img-top h-[60%] bg-contain bg-no-repeat bg-center"
-          ></div>
-          <h1 className="mt-2 text-regular font-bold text-center">
-            {product.title}
-          </h1>
-        </Link>
-      ))}
+    <div className="flex flex-col h-full w-full lg:w-[80%] lg:shrink-0 lg:z-0 lg:block">
+      <div
+        className={`relative bg-[#666] h-[8vh] w-full fixed z-10 top-0 left-0 flex items-center px-10 lg:hidden`}
+      >
+        {isopen === false && (
+          <i
+            className="ri-menu-line text-white text-xl absolute top-[50%] right-[10%] cursor-pointer"
+            onClick={() => setisopen(true)}
+          ></i>
+        )}
+
+        {isopen === true && (
+          <i
+            className="ri-close-line text-white text-xl absolute top-[50%] right-[10%] cursor-pointer"
+            onClick={() => setisopen(false)}
+          ></i>
+        )}
+      </div>
+
+      <div className="card-container h-full w-full bg-zinc-100 p-5 flex flex-wrap gap-4 overflow-x-hidden overflow-y-auto">
+        {filteredProducts.map((product) => (
+          <Link
+            key={product.id}
+            to={`/details/${product.id}`}
+            className="card  rounded w-[300px] h-[300px] mx-auto border border-zinc-400 p-[5px] flex flex-col items-center justify-between overflow-y-auto"
+          >
+            <div className="card-img-top  w-[150px] h-fit mx-auto bg-contain bg-no-repeat bg-center">
+              <img
+                src={`${product.image}`}
+                className="inline-block mx-auto "
+                alt=""
+              />
+            </div>
+            <h1 className="mt-2 text-sm font-bold text-center">
+              {product.title}
+            </h1>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
